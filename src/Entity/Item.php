@@ -15,78 +15,64 @@ class Item
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="guid")
      */
-    private $sku;
+    private string $sku;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $price;
+    private int $price;
 
     /**
      * @ORM\OneToOne(targetEntity=ShippingPrice::class, cascade={"persist", "remove"})
      */
-    private $shipping;
+    private ShippingPrice $shipping;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $title;
+    private string $title;
+
+    /**
+     * @param $sku
+     * @param $price
+     * @param $shipping
+     * @param $title
+     */
+    public function __construct(string $sku, int $price, string $title, ShippingPrice $shipping)
+    {
+        $this->sku      = $sku;
+        $this->price    = $price;
+        $this->shipping = $shipping;
+        $this->title    = $title;
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getSku(): ?string
+    public function getSku(): string
     {
         return $this->sku;
     }
 
-    public function setSku(string $sku): self
-    {
-        $this->sku = $sku;
-
-        return $this;
-    }
-
-    public function getPrice(): ?int
+    public function getPrice(): int
     {
         return $this->price;
     }
 
-    public function setPrice(int $price): self
-    {
-        $this->price = $price;
-
-        return $this;
-    }
-
-    public function getShipping(): ?ShippingPrice
+    public function getShipping(): ShippingPrice
     {
         return $this->shipping;
     }
 
-    public function setShipping(?ShippingPrice $shipping): self
-    {
-        $this->shipping = $shipping;
-
-        return $this;
-    }
-
-    public function getTitle(): ?string
+    public function getTitle(): string
     {
         return $this->title;
-    }
-
-    public function setTitle(string $title): self
-    {
-        $this->title = $title;
-
-        return $this;
     }
 }

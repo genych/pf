@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\OrderRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -18,33 +17,44 @@ class Order
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $price;
+    private int $price;
 
     /**
      * @ORM\OneToOne(targetEntity=ShippingInfo::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $shippingInfo;
+    private ShippingInfo $shippingInfo;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Package::class)
+     * @ORM\ManyToMany(targetEntity=Package::class, cascade={"persist", "remove"})
      */
-    private $packages;
+    private Collection $packages;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Customer::class, inversedBy="orders")
+     * @ORM\ManyToOne(targetEntity=Customer::class, inversedBy="orders", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $customer;
+    private Customer $customer;
 
-    public function __construct()
+    /**
+     * @param int             $price
+     * @param ShippingInfo    $shippingInfo
+     * @param Collection      $packages
+     * @param Customer        $customer
+     */
+    public function __construct(int $price, ShippingInfo $shippingInfo, Collection $packages, Customer $customer)
     {
-        $this->packages = new ArrayCollection();
+        $this->price        = $price;
+        $this->shippingInfo = $shippingInfo;
+        $this->packages     = $packages;
+        $this->customer     = $customer;
+
+        $customer->addOrder($this);
     }
 
     public function getId(): ?int
@@ -52,28 +62,14 @@ class Order
         return $this->id;
     }
 
-    public function getPrice(): ?int
+    public function getPrice(): int
     {
         return $this->price;
-    }
-
-    public function setPrice(int $price): self
-    {
-        $this->price = $price;
-
-        return $this;
     }
 
     public function getShippingInfo(): ?ShippingInfo
     {
         return $this->shippingInfo;
-    }
-
-    public function setShippingInfo(ShippingInfo $shippingInfo): self
-    {
-        $this->shippingInfo = $shippingInfo;
-
-        return $this;
     }
 
     /**
@@ -84,33 +80,8 @@ class Order
         return $this->packages;
     }
 
-    public function addPackage(Package $package): self
-    {
-        if (!$this->packages->contains($package)) {
-            $this->packages[] = $package;
-        }
-
-        return $this;
-    }
-
-    public function removePackage(Package $package): self
-    {
-        if ($this->packages->contains($package)) {
-            $this->packages->removeElement($package);
-        }
-
-        return $this;
-    }
-
     public function getCustomer(): ?Customer
     {
         return $this->customer;
-    }
-
-    public function setCustomer(?Customer $customer): self
-    {
-        $this->customer = $customer;
-
-        return $this;
     }
 }

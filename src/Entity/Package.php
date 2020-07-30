@@ -15,45 +15,41 @@ class Package
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $quantity;
+    private int $quantity;
 
     /**
      * @ORM\OneToOne(targetEntity=Item::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $item;
+    private Item $item;
+
+    /**
+     * @param int  $quantity
+     * @param Item $item
+     */
+    public function __construct(int $quantity, Item $item)
+    {
+        $this->quantity = $quantity;
+        $this->item     = $item;
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getQuantity(): ?int
+    public function getQuantity(): int
     {
         return $this->quantity;
     }
 
-    public function setQuantity(int $quantity): self
-    {
-        $this->quantity = $quantity;
-
-        return $this;
-    }
-
-    public function getItem(): ?Item
+    public function getItem(): Item
     {
         return $this->item;
-    }
-
-    public function setItem(Item $item): self
-    {
-        $this->item = $item;
-
-        return $this;
     }
 }

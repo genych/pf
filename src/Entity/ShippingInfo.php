@@ -15,111 +15,106 @@ class ShippingInfo
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $country;
+    private string $country;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $city;
+    private string $city;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $address;
+    private string $address;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $phone;
+    private string $phone;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private string $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $region;
+    private ?string $region;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $state;
+    private ?string $state;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $zip;
+    private ?string $zip;
+
+    /**
+     * @param string $country
+     * @param string $city
+     * @param string $address
+     * @param string $phone
+     * @param string $name
+     * @param string|null $region
+     * @param string|null $state
+     * @param string|null $zip
+     */
+    public function __construct(
+        string $country,
+        string $city,
+        string $address,
+        string $phone,
+        string $name,
+        ?string $region,
+        ?string $state,
+        ?string $zip
+    ) {
+        $this->country = $country;
+        $this->city    = $city;
+        $this->address = $address;
+        $this->phone   = $phone;
+        $this->name    = $name;
+        $this->region  = $region;
+        $this->state   = $state;
+        $this->zip     = $zip;
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getCountry(): ?string
+    public function getCountry(): string
     {
         return $this->country;
     }
 
-    public function setCountry(string $country): self
-    {
-        $this->country = $country;
-
-        return $this;
-    }
-
-    public function getCity(): ?string
+    public function getCity(): string
     {
         return $this->city;
     }
 
-    public function setCity(string $city): self
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    public function getAddress(): ?string
+    public function getAddress(): string
     {
         return $this->address;
     }
 
-    public function setAddress(string $address): self
-    {
-        $this->address = $address;
-
-        return $this;
-    }
-
-    public function getPhone(): ?string
+    public function getPhone(): string
     {
         return $this->phone;
     }
 
-    public function setPhone(string $phone): self
-    {
-        $this->phone = $phone;
-
-        return $this;
-    }
-
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     public function getRegion(): ?string
@@ -127,34 +122,13 @@ class ShippingInfo
         return $this->region;
     }
 
-    public function setRegion(?string $region): self
-    {
-        $this->region = $region;
-
-        return $this;
-    }
-
     public function getState(): ?string
     {
         return $this->state;
     }
 
-    public function setState(?string $state): self
-    {
-        $this->state = $state;
-
-        return $this;
-    }
-
     public function getZip(): ?string
     {
         return $this->zip;
-    }
-
-    public function setZip(?string $zip): self
-    {
-        $this->zip = $zip;
-
-        return $this;
     }
 }

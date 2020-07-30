@@ -15,32 +15,53 @@ class ShippingPrice
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $firstDomestic;
+    private ?int $firstDomestic;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $firstWorldwide;
+    private ?int $firstWorldwide;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $restDomestic;
+    private ?int $restDomestic;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $restWorldWide;
+    private ?int $restWorldWide;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $expressDomestic;
+    private ?int $expressDomestic;
+
+    /**
+     * @param int|null $firstDomestic
+     * @param int|null $firstWorldwide
+     * @param int|null $restDomestic
+     * @param int|null $restWorldWide
+     * @param int|null $expressDomestic
+     */
+    public function __construct(
+        ?int $firstDomestic,
+        ?int $firstWorldwide,
+        ?int $restDomestic,
+        ?int $restWorldWide,
+        ?int $expressDomestic
+    ) {
+        $this->firstDomestic   = $firstDomestic;
+        $this->firstWorldwide  = $firstWorldwide;
+        $this->restDomestic    = $restDomestic;
+        $this->restWorldWide   = $restWorldWide;
+        $this->expressDomestic = $expressDomestic;
+    }
 
     public function getId(): ?int
     {
@@ -52,23 +73,9 @@ class ShippingPrice
         return $this->firstDomestic;
     }
 
-    public function setFirstDomestic(?int $firstDomestic): self
-    {
-        $this->firstDomestic = $firstDomestic;
-
-        return $this;
-    }
-
     public function getFirstWorldwide(): ?int
     {
         return $this->firstWorldwide;
-    }
-
-    public function setFirstWorldwide(?int $firstWorldwide): self
-    {
-        $this->firstWorldwide = $firstWorldwide;
-
-        return $this;
     }
 
     public function getRestDomestic(): ?int
@@ -76,34 +83,13 @@ class ShippingPrice
         return $this->restDomestic;
     }
 
-    public function setRestDomestic(?int $restDomestic): self
-    {
-        $this->restDomestic = $restDomestic;
-
-        return $this;
-    }
-
     public function getRestWorldWide(): ?int
     {
         return $this->restWorldWide;
     }
 
-    public function setRestWorldWide(?int $restWorldWide): self
-    {
-        $this->restWorldWide = $restWorldWide;
-
-        return $this;
-    }
-
     public function getExpressDomestic(): ?int
     {
         return $this->expressDomestic;
-    }
-
-    public function setExpressDomestic(?int $expressDomestic): self
-    {
-        $this->expressDomestic = $expressDomestic;
-
-        return $this;
     }
 }

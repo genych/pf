@@ -17,12 +17,12 @@ class Customer
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
-     * @ORM\OneToMany(targetEntity=Order::class, mappedBy="customer")
+     * @ORM\OneToMany(targetEntity=Order::class, mappedBy="customer", cascade={"persist", "remove"})
      */
-    private $orders;
+    private Collection $orders;
 
     public function __construct()
     {
@@ -46,20 +46,6 @@ class Customer
     {
         if (!$this->orders->contains($order)) {
             $this->orders[] = $order;
-            $order->setCustomer($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOrder(Order $order): self
-    {
-        if ($this->orders->contains($order)) {
-            $this->orders->removeElement($order);
-            // set the owning side to null (unless already changed)
-            if ($order->getCustomer() === $this) {
-                $order->setCustomer(null);
-            }
         }
 
         return $this;
