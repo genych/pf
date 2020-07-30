@@ -2,9 +2,9 @@
 
 namespace App\Service;
 
+use App\Entity\Customer;
 use App\Entity\Order;
 use App\Repository\CustomerRepository;
-use Symfony\Component\Config\Definition\Exception\Exception;
 
 class FakeBank
 {
@@ -26,13 +26,8 @@ class FakeBank
         return sprintf("%.2f", round($amount / 100, 2));
     }
 
-    public function getBalance(int $customerId): int
+    public function getBalance(Customer $customer): int
     {
-        $customer = $this->customerRepository->find($customerId);
-        if (!$customer) {
-            throw new Exception('user not found');
-        }
-
         $prices = $customer->getOrders()->map(function(Order $o) {return $o->getPrice();});
         return self::INITIAL_BALANCE - array_sum($prices->toArray());
     }

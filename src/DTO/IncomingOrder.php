@@ -8,17 +8,20 @@ class IncomingOrder
     private ShippingInfo $shippingInfo;
     /** @var Thing[] */
     private array $items;
+    private bool $express;
 
     /**
      * @param int          $user
      * @param ShippingInfo $shippingInfo
      * @param Thing[]      $items
+     * @param bool         $express
      */
-    public function __construct(int $user, ShippingInfo $shippingInfo, array $items)
+    public function __construct(int $user, ShippingInfo $shippingInfo, array $items, bool $express)
     {
         $this->user         = $user;
         $this->shippingInfo = $shippingInfo;
         $this->items        = $items;
+        $this->express = $express;
     }
 
     /**
@@ -43,5 +46,13 @@ class IncomingOrder
     public function getItems(): array
     {
         return $this->items;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isExpress(): bool
+    {
+        return $this->express;
     }
 }

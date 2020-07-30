@@ -4,12 +4,11 @@ namespace App\Controller;
 
 use App\DTO\IncomingOrder;
 use App\Entity\Customer;
-use App\Repository\CustomerRepository;
 use App\Service\FakeBank;
 use App\Service\Seller;
+use App\Validator\OfEverything;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -36,21 +35,17 @@ class CustomerController extends AbstractController
 
     /**
      * @Route("/user/{id<\d+>}", methods={"GET"})
-     * @param CustomerRepository $customerRepository
      * @param FakeBank           $bank
+     * @param OfEverything       $validator
      * @param int                $id
      * @return JsonResponse
      */
-    public function poke(CustomerRepository $customerRepository, FakeBank $bank, int $id): JsonResponse
+    public function poke(FakeBank $bank, OfEverything $validator, int $id): JsonResponse
     {
-// TODO: move
-        $customer = $customerRepository->find($id);
-        if (!$customer) {
-            throw new Exception('user not found');
-        }
+        $customer = $validator->validateCustomer($id);
         
         return $this->json([
-            'id' => $customer->getId(), 'balance' => FakeBank::fromMinorUnits($bank->getBalance($id))
+            'id' => $customer->getId(), 'balance' => FakeBank::fromMinorUnits($bank->getBalance($customer))
         ]);
     }
 
@@ -59,13 +54,15 @@ class CustomerController extends AbstractController
      * @param Request             $request
      * @param SerializerInterface $serializer
      * @param Seller              $seller
+     * @param OfEverything        $validator
      * @return JsonResponse
      */
-    public function order(Request $request, SerializerInterface $serializer, Seller $seller): JsonResponse
+    public function order(Request $request, SerializerInterface $serializer, Seller $seller, OfEverything $validator): JsonResponse
     {
         /** @var IncomingOrder $incomingOrder */
         $incomingOrder = $serializer->deserialize($request->getContent(), IncomingOrder::class, 'json');
-        $order         = $seller->take($incomingOrder);
+
+        $order = $seller->take($validator->validateEverything($incomingOrder));
 
         return $this->json(['order' => $order->getId(), 'price' => FakeBank::fromMinorUnits($order->getPrice())]);
     }
