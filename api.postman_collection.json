@@ -1,0 +1,109 @@
+{
+	"info": {
+		"_postman_id": "3289ab0b-ac65-49ad-bb92-98d3219207c1",
+		"name": "pf",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "make",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8000/user",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"user"
+					]
+				},
+				"description": "make user with free 100$"
+			},
+			"response": []
+		},
+		{
+			"name": "get2",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8000/user/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"user",
+						"2"
+					]
+				},
+				"description": "get user #2"
+			},
+			"response": []
+		},
+		{
+			"name": "items",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8000/items",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"items"
+					]
+				},
+				"description": "get all items with their SKUs and prices"
+			},
+			"response": []
+		},
+		{
+			"name": "order",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user\": 2,\n    \"items\": [\n        {\n            \"sku\": \"c75ba722-4ad6-4fc3-afd1-ab88c0cf2b69\",\n            \"quantity\": 1\n        },\n        {\n            \"sku\": \"c5a79049-c6ac-4f9f-9005-01824cfd45fc\",\n            \"quantity\": 2\n        }\n    ],\n    \"shippingInfo\": {\n        \"country\": \"nonUS\",\n        \"city\": \"dfsdf\",\n        \"address\": \"asdffd\",\n        \"phone\": \"asdf\",\n        \"name\": \"asdfasdf\",\n        \"state\": \"asdf\",\n        \"zip\": \"asdf\",\n        \"region\": null\n    },\n    \"express\": false\n}"
+				},
+				"url": {
+					"raw": "localhost:8000/order",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"order"
+					]
+				},
+				"description": "create user, fill actual SKUs (they reseeded every build) and other info, don't spend too much"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
