@@ -66,7 +66,7 @@ class EverythingController extends AbstractController
                 FakeBank::fromMinorUnits($shippingPrices->getExpressDomestic())
             );
 
-            $items[] = new Item($item->getSku(), $pricing);
+            $items[] = new Item($item->getSku(), $item->getTitle(), $pricing);
 
         }
 

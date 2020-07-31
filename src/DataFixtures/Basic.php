@@ -25,7 +25,7 @@ class Basic extends Fixture
         $spTs = new ShippingPrice(100, 300, 50, 150, 1000);
         
         $mug = new Item(Uuid::v4()->toRfc4122(), 0, 'muggy', $spMug);
-        $ts = new Item(Uuid::v4()->toRfc4122(), 0, 't-short', $spTs);
+        $ts = new Item(Uuid::v4()->toRfc4122(), 0, 't-shirt', $spTs);
 
         $p1 = new Package(3, $mug);
         $p2 = new Package(1, $ts);

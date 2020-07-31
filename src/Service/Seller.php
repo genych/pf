@@ -7,6 +7,7 @@ use App\DTO\Thing;
 use App\Entity\Item;
 use App\Entity\Order;
 use App\Entity\Package;
+use App\Entity\ShippingInfo;
 use App\Repository\CustomerRepository;
 use App\Repository\ItemRepository;
 use App\Validator\OfEverything;
@@ -25,6 +26,7 @@ class Seller
 
     /**
      * @param CustomerRepository     $customerRepository
+     * @param ItemRepository         $itemRepository
      * @param EntityManagerInterface $em
      */
     public function __construct(
@@ -43,7 +45,7 @@ class Seller
         $si = $incomingOrder->getShippingInfo();
 
 // TODO: adapter?
-        $shippingInfo = new \App\Entity\ShippingInfo(
+        $shippingInfo = new ShippingInfo(
             $si->getCountry(),
             $si->getCity(),
             $si->getAddress(),
@@ -104,6 +106,8 @@ class Seller
             }
 
             $price += $firstPrice + ($quantity - 1) * $restPrice;
+
+            assert($price > 0, 'no way');
         }
 
         return $price;

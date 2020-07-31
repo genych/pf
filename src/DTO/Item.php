@@ -5,15 +5,18 @@ namespace App\DTO;
 class Item
 {
     private string $sku;
+    private string $title;
     private Pricing $pricing;
 
     /**
      * @param string  $sku
+     * @param string  $title
      * @param Pricing $pricing
      */
-    public function __construct(string $sku, Pricing $pricing)
+    public function __construct(string $sku, string $title, Pricing $pricing)
     {
         $this->sku     = $sku;
+        $this->title   = $title;
         $this->pricing = $pricing;
     }
 
@@ -23,6 +26,14 @@ class Item
     public function getSku(): string
     {
         return $this->sku;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle(): string
+    {
+        return $this->title;
     }
 
     /**

@@ -2,14 +2,6 @@
 
 namespace App\DTO;
 
-use Symfony\Component\Validator\Constraints;
-
-/**
- * @Constraints\Expression(
- *     "(this.getCountry() === 'US' and !this.getState() and !this.getZip())",
- *     message="provide state and zip"
- * )
- */
 class ShippingInfo
 {
     private string $country;

@@ -65,8 +65,16 @@ class OfEverything
             throw new Exception('bad request');
         }
 
-        if ($order->isExpress() && self::isDomestic($order->getShippingInfo())) {
+        $shippingInfo = $order->getShippingInfo();
+
+        if ($order->isExpress() && !self::isDomestic($shippingInfo)) {
             throw new Exception('no worldwide express');
+        }
+
+        if (self::isDomestic($shippingInfo)) {
+            if (!($shippingInfo->getZip() && $shippingInfo->getState())) {
+                throw new Exception('provide state and zip');
+            }
         }
 
         return $order;
