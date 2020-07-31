@@ -25,7 +25,7 @@ class Order
     private int $price;
 
     /**
-     * @ORM\OneToOne(targetEntity=ShippingInfo::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=ShippingInfo::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private ShippingInfo $shippingInfo;

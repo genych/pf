@@ -23,7 +23,7 @@ class Package
     private int $quantity;
 
     /**
-     * @ORM\OneToOne(targetEntity=Item::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Item::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private Item $item;
