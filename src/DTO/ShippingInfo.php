@@ -2,6 +2,8 @@
 
 namespace App\DTO;
 
+use Symfony\Component\Validator\Constraints;
+
 class ShippingInfo
 {
     private string $country;
