@@ -21,8 +21,8 @@ class Basic extends Fixture
      */
     public function load(ObjectManager $manager): void
     {
-        $spMug = new ShippingPrice(200, 500, 100, 250, 10);
-        $spTs = new ShippingPrice(100, 300, 50, 150, 10);
+        $spMug = new ShippingPrice(200, 500, 100, 250, 1000);
+        $spTs = new ShippingPrice(100, 300, 50, 150, 1000);
         
         $mug = new Item(Uuid::v4()->toRfc4122(), 0, 'muggy', $spMug);
         $ts = new Item(Uuid::v4()->toRfc4122(), 0, 't-short', $spTs);
