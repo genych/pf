@@ -17,26 +17,21 @@ class OfEverything
     private ValidatorInterface $validator;
     /** @var CustomerRepository */
     private CustomerRepository $customerRepository;
-    /** @var FakeBank */
-    private FakeBank $bank;
     /** @var Seller */
     private Seller $seller;
 
     /**
      * @param ValidatorInterface $validator
      * @param CustomerRepository $customerRepository
-     * @param FakeBank           $bank
      * @param Seller             $seller
      */
     public function __construct(
         ValidatorInterface $validator,
         CustomerRepository $customerRepository,
-        FakeBank $bank,
         Seller $seller
     ) {
         $this->validator = $validator;
         $this->customerRepository = $customerRepository;
-        $this->bank = $bank;
         $this->seller = $seller;
     }
 
@@ -89,6 +84,6 @@ class OfEverything
 
     public function validateBalance(Customer $customer, int $price): bool
     {
-        return $this->bank->getBalance($customer) > $price;
+        return FakeBank::getBalance($customer) > $price;
     }
 }
